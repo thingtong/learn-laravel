@@ -34,7 +34,7 @@ class AuthController extends Controller
             'username' => 'nullable|string|required_without:email',
         ]);
 
-        $login = $request->email ?? $request->username;
+        $login = $request->email ?: $request->username;
 
         return Http::asForm()->post(config('app.url') . '/oauth/token', [
             'grant_type'    => 'password',
