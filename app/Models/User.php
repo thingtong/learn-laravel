@@ -29,4 +29,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function findForPassport($username)
+    {
+        return $this->where('email', $username)
+                    ->orWhere('username', $username)
+                    ->first();
+    }
 }
