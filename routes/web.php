@@ -16,15 +16,40 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 Route::middleware(['auth'])->group(function () {
+
+    // ===== Courses =====
     Route::get('/courses', [CourseController::class, 'index']);
-    Route::get('/courses/{id}', [CourseController::class, 'show']);
+   
+    // Route::get('/courses/create', [CourseController::class, 'create']);
+    // //Route::post('/courses', [CourseController::class, 'store']);
+    // Route::post('/courses/store', [CourseController::class, 'store']);
+    
+    // Route::get('/courses/create', [CourseController::class, 'create'])
+    //     ->name('courses.create');
 
-    Route::get('/lessons/{id}', [LessonController::class, 'show']);
-    Route::post('/lessons/{id}/complete', [LessonController::class, 'complete']);
+    // Route::post('/courses/store', [CourseController::class, 'store'])
+    //     ->name('courses.store');
 
-    Route::get('/quiz/{courseId}/start', [QuizController::class, 'start']);
-    Route::post('/quiz/{quizId}/submit', [QuizController::class, 'submit']);
+    Route::resource('courses', CourseController::class);
 
+    Route::get('/courses/{id}', [CourseController::class, 'show'])
+        ->whereNumber('id');
+
+    // Route::get('/lessons/{id}', [LessonController::class, 'show']);
+    // Route::post('/lessons/{id}/complete', [LessonController::class, 'complete']);
+
+    // ===== Lessons =====
+    Route::get('/lessons/{id}', [LessonController::class, 'show'])
+        ->whereNumber('id');
+    Route::post('/lessons/{id}/complete', [LessonController::class, 'complete'])
+        ->whereNumber('id');
+
+    // ===== Quiz =====
+    
+    Route::get('/quiz/{courseId}/start', [QuizController::class, 'start'])
+        ->whereNumber('courseId');
+    Route::post('/quiz/{quizId}/submit', [QuizController::class, 'submit'])
+        ->whereNumber('quizId');
 });
 
 

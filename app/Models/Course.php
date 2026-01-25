@@ -14,6 +14,7 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
+        'image',
         'pass_score',
         'created_by',
     ];
@@ -25,10 +26,9 @@ class Course extends Model
     }
 
     // หลักสูตร -> บทเรียน
-    public function lessons()
+   public function lessons()
     {
-        return $this->hasMany(Lesson::class, 'course_id')
-                    ->orderBy('order_no');
+        return $this->hasMany(Lesson::class);
     }
 
     // หลักสูตร -> ข้อสอบ

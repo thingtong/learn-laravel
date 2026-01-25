@@ -14,36 +14,30 @@ class Lesson extends Model
     protected $fillable = [
         'course_id',
         'title',
+        'content',
         'description',
         'order_no',
     ];
 
-    // บทเรียน -> หลักสูตร
-    public function course()
+   public function course()
     {
-        return $this->belongsTo(Course::class, 'course_id');
+        return $this->belongsTo(Course::class);
     }
 
-    // บทเรียน -> วิดีโอ
     public function videos()
     {
-        return $this->hasMany(LessonVideo::class, 'lesson_id');
+        return $this->hasMany(LessonVideo::class);
     }
 
-    // บทเรียน -> เอกสาร
     public function documents()
     {
-        return $this->hasMany(LessonDocument::class, 'lesson_id');
+        return $this->hasMany(LessonDocument::class);
     }
 
-    // เช็คว่าผู้เรียนเรียนจบหรือยัง
-    // public function completedBy($userId)
-    // {
-    //     return LessonProgress::where('lesson_id', $this->id)
-    //         ->where('user_id', $userId)
-    //         ->where('completed', 1)
-    //         ->exists();
-    // }
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
     public function progress()
     {
         return $this->hasMany(LessonProgress::class);
